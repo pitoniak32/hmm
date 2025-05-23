@@ -120,7 +120,7 @@ fn less_md(content: &str) -> Result<()> {
 fn glow_md(content: &str) -> Result<()> {
     let mut child = std::process::Command::new("glow")
         .arg("-p")
-        .arg("-") // use a command that reads from stdin
+        .arg("-w=0")
         .stdin(std::process::Stdio::piped())
         .spawn()?;
 
@@ -204,7 +204,7 @@ fn edit_item(item: &str) -> Result<String> {
 
 fn create_tmp_file(content: &str) -> Result<PathBuf> {
     let temp_dir = std::env::temp_dir();
-    let file_path = temp_dir.join("edit_file.yml");
+    let file_path = temp_dir.join("edit_file.md");
     let mut file = File::create(&file_path).map_err(Error::FailedCreatingTempFile)?;
     writeln!(file, "{}", content).map_err(Error::FailedWritingTempFileContent)?;
 
